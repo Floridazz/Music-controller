@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "music_controller.wsgi.application"
+WSGI_APPLICATION = "music_controller.wsgi.app"
 
 
 # Database
@@ -124,4 +124,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+if os.environ.get('VERCEL'):
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
