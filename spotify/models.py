@@ -1,5 +1,6 @@
 from django.db import models
 from api.models import Room
+from django.contrib.auth.models import User
 
 
 class SpotifyToken(models.Model):
@@ -12,7 +13,8 @@ class SpotifyToken(models.Model):
 
 
 class Vote(models.Model):
-    user = models.CharField(max_length=50, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    song_id = models.CharField(max_length=50)
+    user = models.CharField(max_length=50)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    song_id = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    previous = models.BooleanField(default=False)

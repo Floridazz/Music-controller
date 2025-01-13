@@ -9,10 +9,15 @@ import {
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
+import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 
 export default class MusicPlayer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hasVotedSkip: false,
+      hasVotedPrevious: false
+    };
   }
 
   skipSong() {
@@ -39,11 +44,19 @@ export default class MusicPlayer extends Component {
     fetch("/spotify/play", requestOptions);
   }
 
+  previousSong() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/previous", requestOptions);
+  }
+
   render() {
     const songProgress = (this.props.time / this.props.duration) * 100;
 
     return (
-      <Card>
+      <Card style={{ backgroundColor: '#faedcd' }}>
         <Grid container alignItems="center">
           <Grid item align="center" xs={4}>
             <img src={this.props.image_url} height="100%" width="100%" />
@@ -56,6 +69,12 @@ export default class MusicPlayer extends Component {
               {this.props.artist}
             </Typography>
             <div>
+              <IconButton onClick={() => this.previousSong()}>
+                {!this.props.isHost && (
+                  <span>{this.props.previous_votes} / {this.props.votes_required}</span>
+                )}
+                <SkipPreviousIcon />
+              </IconButton>
               <IconButton
                 onClick={() => {
                   this.props.is_playing ? this.pauseSong() : this.playSong();
