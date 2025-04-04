@@ -6,3 +6,7 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 REDIRECT_URI = os.getenv("REDIRECT_URI")
+
+# print(CLIENT_ID)
+# print(CLIENT_SECRET)
+# print(REDIRECT_URI)
